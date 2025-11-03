@@ -6,7 +6,7 @@ A sophisticated AI-powered course recommendation system
 
 import os
 import sys
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 
 # Optional PDF parsing - gracefully degrade if not available
 try:
@@ -34,6 +34,10 @@ except ImportError:
 
 class CourseAnalyzer:
     """Main class for the Course Selection AI Analyzer"""
+    
+    # Configuration constants
+    MAX_COURSES_TO_EVALUATE = 10  # Limit for AI evaluation to manage processing time
+    MAX_TOKEN_LENGTH = 512  # Maximum token length for AI model input
     
     def __init__(self):
         self.courses = []
@@ -160,7 +164,7 @@ class CourseAnalyzer:
         print(f"✓ Collected {len(interests)} interest indicators")
         return interests
     
-    def step2_5_graduation_requirements(self) -> Dict[str, any]:
+    def step2_5_graduation_requirements(self) -> Dict[str, Any]:
         """
         Step 2.5: Ask about graduation requirements
         
@@ -214,13 +218,13 @@ class CourseAnalyzer:
                 interest_context = " ".join(self.user_interests)
                 
                 print(f"\nEvaluating {len(self.courses)} courses...")
-                for course in self.courses[:10]:  # Limit to first 10 for demo
+                for course in self.courses[:self.MAX_COURSES_TO_EVALUATE]:
                     # Combine course info with user interests for evaluation
                     evaluation_text = f"User interests: {interest_context}. Course: {course.get('name', '')} {course.get('description', '')[:200]}"
                     
                     # Truncate if too long
-                    if len(evaluation_text) > 512:
-                        evaluation_text = evaluation_text[:512]
+                    if len(evaluation_text) > self.MAX_TOKEN_LENGTH:
+                        evaluation_text = evaluation_text[:self.MAX_TOKEN_LENGTH]
                     
                     try:
                         result = self.ai_model(evaluation_text)[0]
