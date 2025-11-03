@@ -30,3 +30,5 @@ env/
 .pytest_cache/
 .coverage
 htmlcov/
+sample_course_catalog.txt
+sample_course_catalog.pdf
