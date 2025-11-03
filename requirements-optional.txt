@@ -1,0 +1,9 @@
+# Minimal requirements (required)
+PyPDF2>=3.0.0
+
+# Optional AI features (for full functionality)
+# Uncomment to install:
+# transformers>=4.30.0
+# torch>=2.0.0
+# sentence-transformers>=2.0.0
+# numpy>=1.24.0
